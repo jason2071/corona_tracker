@@ -30,13 +30,13 @@ class TableContentRow extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           SizedBox(
-            width: sw * 0.15,
+            width: sw * 0.16,
             child: Center(
               child: Text(
                 confirmed == 0 ? "-" : formatDecimal(confirmed),
@@ -48,7 +48,7 @@ class TableContentRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: sw * 0.15,
+            width: sw * 0.16,
             child: Center(
               child: Text(
                 recovered == 0 ? "-" : formatDecimal(recovered),

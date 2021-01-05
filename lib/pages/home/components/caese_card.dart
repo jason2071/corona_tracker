@@ -1,8 +1,9 @@
 import 'package:corona_tracker/constants.dart';
 import 'package:corona_tracker/size_config.dart';
+import 'package:corona_tracker/utils/format_decimal.dart';
 import 'package:flutter/material.dart';
 
-class CaeseCard extends StatelessWidget {
+class CaeseCard extends StatefulWidget {
   const CaeseCard({
     Key key,
     this.title,
@@ -19,16 +20,36 @@ class CaeseCard extends StatelessWidget {
   final Color color, numberColor;
 
   @override
-  Widget build(BuildContext context) {
-    double sw = SizeConfig.screenWidth;
-    double sh = SizeConfig.screenHeight;
+  _CaeseCardState createState() => _CaeseCardState();
+}
 
+class _CaeseCardState extends State<CaeseCard> {
+  double sw = SizeConfig.screenWidth;
+  double sh = SizeConfig.screenHeight;
+  double fontDynamicSize = 30;
+
+  @override
+  void initState() {
+    super.initState();
+    int totalCasesLength = widget.totalCaese.toString().length;
+
+    if (totalCasesLength >= 7) {
+      fontDynamicSize = 20;
+    } else if (totalCasesLength >= 5) {
+      fontDynamicSize = 22;
+    }
+
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      width: sw * 0.43,
+      width: sw * 0.46,
       height: sh * 0.15,
       padding: EdgeInsets.all(kDefaultPadding),
       decoration: BoxDecoration(
-        color: color,
+        color: widget.color,
         boxShadow: [kShadow],
         borderRadius: BorderRadius.circular(6),
       ),
@@ -36,7 +57,7 @@ class CaeseCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            widget.title,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: Colors.white,
@@ -47,30 +68,30 @@ class CaeseCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                totalCaese.toString(),
+                formatDecimal(widget.totalCaese),
                 style: TextStyle(
-                  color: numberColor,
-                  fontSize: 30,
+                  color: widget.numberColor,
+                  fontSize: fontDynamicSize,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               SizedBox(width: 10),
-              if (newCases != null)
+              if (widget.newCases != null)
                 Padding(
                   padding: EdgeInsets.only(top: 12),
                   child: Icon(
-                    iconData,
-                    color: numberColor,
+                    widget.iconData,
+                    color: widget.numberColor,
                     size: 20,
                   ),
                 ),
-              if (newCases != null)
+              if (widget.newCases != null)
                 Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
-                    newCases.toString(),
+                    formatDecimal(widget.newCases),
                     style: TextStyle(
-                      color: numberColor,
+                      color: widget.numberColor,
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),

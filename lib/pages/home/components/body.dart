@@ -25,6 +25,7 @@ class _BodyState extends State<Body> {
   APIResponse _apiResponse;
   bool _isLoading = false;
   Country _country;
+  String iso3 = 'tha';
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _BodyState extends State<Body> {
       _isLoading = true;
     });
 
-    _apiResponse = await service.getCountry();
+    _apiResponse = await service.getCountry(iso3);
     if (!_apiResponse.error) {
       _country = _apiResponse.data;
     }
@@ -47,9 +48,10 @@ class _BodyState extends State<Body> {
     });
   }
 
-  void receiveCountry(value) {
+  void _receiveCountry(value) {
     CountriesArgument argument = value;
-    print(argument.country);
+    iso3 = argument.countryInfo.iso3;
+    _fetchData();
   }
 
   @override
@@ -78,7 +80,7 @@ class _BodyState extends State<Body> {
                       Navigator.pushNamed(context, SelectionScreen.routeName)
                           .then((value) {
                         if (value != null) {
-                          receiveCountry(value);
+                          _receiveCountry(value);
                         }
                       });
                     },
@@ -142,8 +144,8 @@ class _BodyState extends State<Body> {
                   SizedBox(height: 40),
                   Center(
                     child: Wrap(
-                      spacing: 16,
-                      runSpacing: 16,
+                      spacing: 10,
+                      runSpacing: 10,
                       children: [
                         CaeseCard(
                           title: "Comfirmed",

@@ -22,7 +22,9 @@ class _CountryListState extends State<CountryList> {
 
   @override
   void initState() {
-    _fetchData();
+    if (countriesList.length == 0) {
+      _fetchData();
+    }
     super.initState();
   }
 

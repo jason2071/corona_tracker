@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 class HomeService {
   static const API = 'https://disease.sh/v3/covid-19';
 
-  Future<APIResponse<Country>> getCountry() {
-    return http.get(API + '/countries/thailand?strict=true').then((data) {
+  Future<APIResponse<Country>> getCountry(String iso3) {
+    return http.get(API + "/countries/$iso3?strict=true").then((data) {
       if (data.statusCode == 200) {
         final body = utf8.decode(data.bodyBytes);
         final jsonDecode = json.decode(body);
